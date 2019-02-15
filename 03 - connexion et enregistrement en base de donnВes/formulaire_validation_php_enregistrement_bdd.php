@@ -55,6 +55,31 @@ try{
     }
 
 
+    if (isset($_POST['login'])) {
+        $sql = $dbh->query("select login from users");
+        $veriflogin = $sql->fetchColumn();
+        if (empty($_POST['login'])) {
+            $errors[] = 'champ login vide';
+        } else if (mb_strlen($_POST['login']) > 45) {
+            $errors[] = 'champ login trop long (45max)';
+        }
+        else if($veriflogin === $_POST['login']){
+            $errors[] = 'Ce login existe déjà !';
+        }
+    }
+
+    // si email existe
+    if (isset($_POST['user_email'])) {
+        if (empty($_POST['user_email'])) {
+            $errors[] = 'champ user_email vide';
+        } else if (mb_strlen($_POST['user_email']) > 150) {
+            $errors[] = 'champ user_email trop long (150max)';
+            // filter_var
+        } else if (!filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL)) {
+            $errors[] = 'champ user_email non-valide';
+        }
+    }
+
 
 
     /*
@@ -91,20 +116,22 @@ try{
     }
 
 
+
     //requete qui doit retourner des resultats
     $stmt = $dbh->query("select * from users");
     // recupere les users et fout le resultat dans une variable sous forme de tableau de tableaux
     $users = $stmt->fetchAll(PDO::FETCH_CLASS);
 
-    // requete connexion
-    $stmt = $dbh->query("select login, password from users where login='".$_POST['connexionlogin']."'");
-    $connexions = $stmt->fetchAll(PDO::FETCH_CLASS);
-    foreach ($connexions as $connexion) {
-        if(password_verify($_POST['connexionpassword'], $connexion->password)){
-            echo 'vous êtes connecté';
-        }
-        else {
-            echo 'echec connexion';
+    if(isset($_POST['connexionlogin'])) {
+        // requete connexion
+        $stmt = $dbh->query("select login, password from users where login='" . $_POST['connexionlogin'] . "' ");
+        $connexions = $stmt->fetchAll(PDO::FETCH_CLASS);
+        foreach ($connexions as $connexion) {
+            if (password_verify($_POST['connexionpassword'], $connexion->password)) {
+                echo 'vous êtes connecté';
+            } else {
+                echo 'echec connexion';
+            }
         }
     }
 
