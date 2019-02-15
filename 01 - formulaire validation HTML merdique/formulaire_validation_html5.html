@@ -1,0 +1,47 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+
+        <h1>formulaire naze avec validation champs HTML par navigateur</h1>
+        <p>certains ca marche d'autres pas, ca depend du navigateur</p>
+        <form method="post" action="">
+           	<fieldset>
+                <label for="required">required</label>
+                <input type="required" name="required" value="" placeholder="champ obligatoire" required="required">
+            </fieldset>    
+            
+            <fieldset>
+                <label for="email">email</label>
+                <input type="email" name="email" value="" placeholder="tu mets un email ici">
+            </fieldset>
+            
+            <fieldset>
+                <label for="url">url</label>
+                <input type="url" name="url" value="" placeholder="tu mets une url ici">
+            </fieldset>
+
+            <fieldset>
+                <label for="number">number</label>
+                <input type="number" name="number" value="" placeholder="nombre">
+            </fieldset>
+
+            <fieldset>
+                <label for="tel">tel</label>
+                <input type="tel" name="tel" value="" placeholder="tu mets ton tel ici">
+            </fieldset>
+
+            <fieldset>
+                <label for="date">date</label>
+                <input type="date" name="date" value="" placeholder="date?">
+            </fieldset>
+
+            <input type="submit">
+        </form>
+
+
+
+    </body>
+</html>
