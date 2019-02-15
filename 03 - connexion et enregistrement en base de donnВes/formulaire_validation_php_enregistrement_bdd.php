@@ -1,4 +1,5 @@
 <?php
+session_start();
 // connection base mysql
 $db_config = [
     'host'      => 'localhost', // machine, la machine locale s'appelle par convention "localhost"
@@ -129,6 +130,8 @@ try{
         foreach ($connexions as $connexion) {
             if (password_verify($_POST['connexionpassword'], $connexion->password)) {
                 echo 'vous êtes connecté';
+                $_SESSION['login'] = $_POST['connexionlogin'];
+//                header('Location: page_de_redirection.php');
             } else {
                 echo 'echec connexion';
             }
@@ -247,7 +250,10 @@ try{
             </div>
         </div>
 
-
+        <?php if (isset($_SESSION['login'])) {
+        ?>
+            <a href="page_de_redirection.php">autre page</a>
+        <?php } ?>
         <div class="row">
             <h2>Users</h2>
             <table class="u-full-width">
